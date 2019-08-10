@@ -1,0 +1,100 @@
+@charset "utf-8";
+/* Color Variables */
+@primary 1 {
+  background-color: #0e5c8f;
+}
+#primary2 {
+  background-color: #1caeca;
+}
+#primary3 {
+  background-color: #d08f3e;
+}
+#primary4 {
+  background-color: #c9a272;
+}
+#primary5 {
+  background-color: #979695;
+}
+#primary6 {
+  background-color: #b7b6b5;
+}
+html {
+  font-size: 0.7rem;
+}
+.title-header {
+  font-size: 1.6rem;
+}
+@media (min-width: 576px) {
+  html {
+    font-size: 0.7rem;
+  }
+  .title-header {
+    font-size: 1.8rem;
+  }
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 0.8rem;
+  }
+  .title-header {
+    font-size: 2.2rem;
+  }
+}
+@media (min-width: 992px) {
+  html {
+    font-size: 0.9rem;
+  }
+  .title-header {
+    font-size: 2.6rem;
+  }
+}
+@media (min-width: 1200px) {
+  html {
+    font-size: 1rem;
+  }
+  .title-header {
+    font-size: 3rem;
+  }
+}
+/* MIXINS */
+.title-header-color {
+  background-color: #0c507c;
+  color: white;
+}
+/* CLASSES */
+.clickable-row {
+  cursor: pointer;
+}
+.action {
+  max-height: 60px;
+  height: 60px;
+}
+.border {
+  border-color: #979695 !important;
+}
+.list-active {
+  background-color: #d08f3e;
+  color: white;
+}
+/* NAMED ELEMENTS */
+#navlist > button {
+  background-color: #d08f3e;
+  color: white;
+}
+/* ELEMENTS */
+header *,
+footer * {
+  background-color: #0c507c;
+  color: white;
+  padding: 2px 0;
+  /* NESTED */
+}
+header * img,
+footer * img {
+  border: 3px solid white;
+  padding: 2px;
+}
+header * span,
+footer * span {
+  color: white;
+}
