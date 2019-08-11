@@ -1,25 +1,17 @@
 const express = require('express');
 const router = express.Router();
-
-
-const context = {
-  title: 'PHE Logs',
-  target_phe: 800,
-  daily_total: 623,
-  remaining_goal: 177
-};
-
+const RecordDataService = require('../services/record.data.service');
 
 /* GET records page. */
 router.get('/', (req, res) => {
-  res.render('records', { title: 'PHE Logs' });
+  res.render('records', { title: 'PHE Logs', records:  new RecordDataService().get_diet_records() });
 });
 
 /* GET record_details page. */
-router.get('/details', (req, res) => {
-  res.render('record_details', context );
+router.get('/details/:id', (req, res) => {
+  const rs = new RecordDataService();
+  const record = rs.get_diet_record(req.params.id);
+  res.render('record_details', { title: 'PHE Logs', record: record, tot_board: rs.calc_tot_board(record) } );
 });
-
-
 
 module.exports = router;

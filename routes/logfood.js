@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const FoodDataService = require('../services/food.data.service');
+const RecordDataService = require('../services/record.data.service');
 
 const context = {
   title: 'PHE Logs',
@@ -10,7 +12,10 @@ const context = {
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('logfood', context );
+  const rs = new RecordDataService();
+  const record = rs.get_todays_record();
+
+  res.render('logfood', { title: 'PHE Logs', record: record, tot_board: rs.calc_tot_board(record) } );
 });
 
 module.exports = router;
