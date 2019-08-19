@@ -22,7 +22,9 @@ router.get('/callback', function (req, res, next) {
   console.log('entering callback with user: ' + user);
   passport.authenticate('auth0', function (err, user, info) {
     if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+    if (!user) {
+      console.log('NO USER FOUND!!!!');
+      return res.redirect('/login'); }
     req.logIn(user, function (err) {
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;
