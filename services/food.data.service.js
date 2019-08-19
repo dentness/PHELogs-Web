@@ -1,15 +1,17 @@
+const axios = require('axios');
+
 class FoodDataService {
 
-  constructor() {
-    this.foods = require('./static_data').getStaticFoods();
+  constructor( URL ){
+    this.DATA_URL = URL;
   }
 
   get_food_list() {
-    return this.foods;
+      return axios.get(this.DATA_URL + '/foods');
   }
 
   find_foods(name) {
-
+    return axios.get(this.DATA_URL + '/foods/findFoodsByDesc/' + name);
   }
 }
 

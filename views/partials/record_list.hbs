@@ -13,10 +13,10 @@
         {{#each records}}
             <tr>
                 <td>{{ date }}</td>
-                <td>{{ goal }}</td>
-                <td>{{ final }}</td>
+                <td>{{ target_phe_level }}</td>
+                <td>{{ actual_phe_level }}</td>
                 <td>{{ notes }}</td>
-                <td><a href="/records/details/{{ id }}">View</a></td>
+                <td><a href="/records/details/{{ _id }}">View</a></td>
             </tr>
         {{/each}}
         </tbody>

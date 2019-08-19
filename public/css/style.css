@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* Color Variables */
-@primary 1 {
+#primary1 {
   background-color: #0e5c8f;
 }
 #primary2 {
@@ -16,7 +16,7 @@
   background-color: #979695;
 }
 #primary6 {
-  background-color: #b7b6b5;
+  background-color: #cccccc;
 }
 html {
   font-size: 0.7rem;

@@ -11,12 +11,12 @@
     <tbody>
     {{#each food}}
         <tr>
-            <td>{{ name }}</td>
+            <td>{{ description }}</td>
             <td>{{ phe_multiplier }}</td>
-            <td>{{ source.name }}</td>
+            <td>{{ source_user.first_name }}</td>
             <td>{{ updated_on }}</td>
             <td>
-                {{#ifCond source.id '===' '123' }}
+                {{#ifCond source._id '===' '123' }}
                 <a href="{{ edit_url }}/{{ id }}">Edit</a>
                 {{/ifCond}}
             </td>

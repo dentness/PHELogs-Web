@@ -11,6 +11,7 @@
                 </button>
                 <div class="collapse navbar-collapse mr-auto" id="navbarText">
                     <ul class="navbar-nav ml-auto">
+                        {{#if user}}
                         <li class="nav-item active">
                             <a class="nav-link" href="/logfood">Log Meal/Snack</a>
                         </li>
@@ -20,19 +21,17 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/foods">Food Lists</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/register">Register</a>
+                        <li class="nav-item">
+                            <span>{{ user.nickname }}</span>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/account">Account</a>
+                            <a class="nav-link" href="/logout">Sign-out</a>
                         </li>
-                        <li class="nav-item active">
-                            <span>{{ username }}</span>
-                            <a class="nav-link" href="/">Sign-out</a>
-                        </li>
+                        {{ else }}
                         <li class="nav-item active">
                             <a class="nav-link" href="/login">Login</a>
                         </li>
+                        {{/if}}
                     </ul>
                 </div>
             </nav>
