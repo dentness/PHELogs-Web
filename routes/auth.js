@@ -38,11 +38,13 @@ router.get('/callback', function (req, res, next) {
 router.get('/logout', (req, res) => {
   req.logout();
 
-  var returnTo = req.protocol + '://' + req.hostname;
-  var port = req.connection.localPort;
-  if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo += ':' + port;
-  }
+  // var returnTo = req.protocol + '://' + req.hostname;
+  // var port = req.connection.localPort;
+  // if (port !== undefined && port !== 80 && port !== 443) {
+  //   returnTo += ':' + port;
+  // }
+
+  var returnTo = 'https://phelogs.herokuapp.com';
   var logoutURL = new URL(
     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
   );
