@@ -33,16 +33,7 @@ var strategy = new Auth0Strategy(
   }
 );
 
-// You can use this section to keep a smaller payload
-passport.serializeUser(function (user, done) {
-  console.log('making a user: ' + user);
-  done(null, user);
-});
 
-passport.deserializeUser(function (user, done) {
-  console.log('whacking a user: ' + user);
-  done(null, user);
-});
 
 // Create the express app
 const app = express();
@@ -67,7 +58,16 @@ app.use(session(sess));
 passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
+// You can use this section to keep a smaller payload
+passport.serializeUser(function (user, done) {
+  console.log('making a user: ' + user);
+  done(null, user);
+});
 
+passport.deserializeUser(function (user, done) {
+  console.log('whacking a user: ' + user);
+  done(null, user);
+});
 app.use(flash());
 
 // Handle auth failure error messages
