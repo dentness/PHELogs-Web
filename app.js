@@ -130,7 +130,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(userInViews());
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/index'));
-app.use(secured());
+// app.use(secured());
 app.use('/', require('./routes/users'));
 app.use('/users', require('./routes/user'));
 app.use('/about', require('./routes/about'));
