@@ -32,7 +32,6 @@ var strategy = new Auth0Strategy(
     return done(null, profile);
   }
 );
-passport.use(strategy);
 
 // You can use this section to keep a smaller payload
 passport.serializeUser(function (user, done) {
@@ -65,6 +64,7 @@ if (app.get('env') === 'production') {
   sess.cookie.secure = true; // serve secure cookies, requires https
 }
 app.use(session(sess));
+passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
 
