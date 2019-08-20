@@ -19,13 +19,14 @@ router.get('/login', passport.authenticate('auth0', {
 
 // Perform the final stage of authentication and redirect to previously requested URL or '/user'
 router.get('/callback', function (req, res, next) {
-  console.log('entering callback with user: ' + user);
   passport.authenticate('auth0', function (err, user, info) {
+    console.log('entering callback with user: ' + JSON.stringify(user));
     if (err) { return next(err); }
     if (!user) {
       console.log('NO USER FOUND!!!!');
       return res.redirect('/login'); }
     req.logIn(user, function (err) {
+      console.log('logging in...');
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;
       delete req.session.returnTo;
@@ -38,13 +39,13 @@ router.get('/callback', function (req, res, next) {
 router.get('/logout', (req, res) => {
   req.logout();
 
-  // var returnTo = req.protocol + '://' + req.hostname;
-  // var port = req.connection.localPort;
-  // if (port !== undefined && port !== 80 && port !== 443) {
-  //   returnTo += ':' + port;
-  // }
+  var returnTo = req.protocol + '://' + req.hostname;
+  var port = req.connection.localPort;
+  if (port !== undefined && port !== 80 && port !== 443) {
+    returnTo += ':' + port;
+  }
 
-  var returnTo = 'https://phelogs.herokuapp.com';
+  // var returnTo = 'https://phelogs.herokuapp.com';
   var logoutURL = new URL(
     util.format('https://%s/v2/logout', process.env.AUTH0_DOMAIN)
   );

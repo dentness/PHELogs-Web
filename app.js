@@ -23,7 +23,7 @@ var strategy = new Auth0Strategy(
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
-      process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+      process.env.AUTH0_CALLBACK_URL || 'http://localhost:' + process.env.PORT + '/callback'
   },
   function (accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -36,10 +36,12 @@ passport.use(strategy);
 
 // You can use this section to keep a smaller payload
 passport.serializeUser(function (user, done) {
+  console.log('making a user: ' + user);
   done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
+  console.log('whacking a user: ' + user);
   done(null, user);
 });
 
