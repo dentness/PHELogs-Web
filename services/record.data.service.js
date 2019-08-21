@@ -2,8 +2,7 @@ const axios = require('axios');
 
 class RecordDataService {
 
-  constructor(URL) {
-    this.DATA_URL = URL;
+  constructor() {
     this.records = require('./static_data').getStaticRecords();
   }
 
@@ -13,11 +12,11 @@ class RecordDataService {
   }
 
   get_diet_record(id) {
-    return axios.get(this.DATA_URL + '/records/' + id);
+    return axios.get(process.env.DATA_URL + '/records/' + id);
   }
 
   get_diet_records(from, to) {
-    return axios.get(this.DATA_URL + '/records');
+    return axios.get(process.env.DATA_URL + '/records');
   }
 
   calc_tot_board(record) {

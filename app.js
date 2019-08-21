@@ -1,39 +1,16 @@
 const express = require('express');
 const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+// const logger = require('morgan');
+// const bodyParser = require('body-parser');
+// const session = require('express-session');
 const exphbs = require('express-handlebars');
-const session = require('express-session');
-const userInViews = require('./lib/middleware/userInViews');
-var flash = require('connect-flash');
 const dotenv = require('dotenv');
-var Auth0Strategy = require('passport-auth0');
-var passport = require('passport');
-const secured = require('./lib/middleware/secured');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const UserDataService = require('./services/user.data.services');
 
-// Setup authentication: Auto0 + Passport
 // Load environment variables from .env
 dotenv.config();
-
-// Configure Passport to use Auth0
-var strategy = new Auth0Strategy(
-  {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL:
-      process.env.AUTH0_CALLBACK_URL || 'http://localhost:' + process.env.PORT + '/callback'
-  },
-  function (accessToken, refreshToken, extraParams, profile, done) {
-    // accessToken is the token to call Auth0 API (not needed in the most cases)
-    // extraParams.id_token has the JSON Web Token
-    // profile has all the information from the user
-    return done(null, profile);
-  }
-);
-
-
 
 // Create the express app
 const app = express();
@@ -42,22 +19,26 @@ const app = express();
 const env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env === 'development';
-app.locals.DATA_URL = process.env.DATA_URL || 'http://localhost:8080';
 
-// config express-session
-var sess = {
-  secret: '85254423-525f-4178-97f4-ca0c381590a7',
-  cookie: {},
-  resave: false,
-  saveUninitialized: true
-};
-if (app.get('env') === 'production') {
-  sess.cookie.secure = true; // serve secure cookies, requires https
-}
-app.use(session(sess));
-passport.use(strategy);
-app.use(passport.initialize());
-app.use(passport.session());
+passport.use('local', new LocalStrategy(
+  function (username, password, done) {
+    return done(null, {"_id": "123456"});
+    // console.log('searching for user: ' + username);
+    // // Lookup a user
+    // new UserDataService().login(username, password).then(user => {
+    //   if (!user) {
+    //     console.log('no user...');
+    //     return done(null, false, {message: 'Incorrect username or password.'});
+    //   } else {
+    //     console.log('wahoo!');
+    //     return done(null, user);
+    //   }
+    // }, err => {
+    //   console.log('aw snap...');
+    //   return done(err)
+    // });
+  }));
+
 // You can use this section to keep a smaller payload
 passport.serializeUser(function (user, done) {
   console.log('making a user: ' + user);
@@ -68,18 +49,10 @@ passport.deserializeUser(function (user, done) {
   console.log('whacking a user: ' + user);
   done(null, user);
 });
-app.use(flash());
 
-// Handle auth failure error messages
-app.use(function (req, res, next) {
-  if (req && req.query && req.query.error) {
-    req.flash('error', req.query.error);
-  }
-  if (req && req.query && req.query.error_description) {
-    req.flash('error_description', req.query.error_description);
-  }
-  next();
-});
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // view engine setup
 app.engine('hbs', exphbs({
@@ -117,21 +90,43 @@ app.engine('hbs', exphbs({
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// app.use(favicon(__dirname + '/public/img/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(cookieParser());
+app.use(require('morgan')('combined'));
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(require('cookie-parser')());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup routes
-app.use(userInViews());
-app.use('/', require('./routes/auth'));
+// Handle auth failure error messages
+// app.use(flash());
+// app.use(function (req, res, next) {
+//   if (req && req.query && req.query.error) {
+//     req.flash('error', req.query.error);
+//   }
+//   if (req && req.query && req.query.error_description) {
+//     req.flash('error_description', req.query.error_description);
+//   }
+//   next();
+// });
+
+// app.use(userInViews());
+app.get('/login', (req, res) => {
+  console.log('opening...');
+  res.render('login', {title: 'PHE Logs'});
+});
+app.post('/login',
+  passport.authenticate('local', { failureRedirect: '/users' },
+    function(req, res) {
+      console.log('passed...' + JSON.stringify(req));
+      res.redirect('/users/' + req.user.username);
+    }));
+app.get('/logout',
+  function(req, res){
+    console.log('logging out...');
+    req.logout();
+    res.redirect('/');
+  });
 app.use('/', require('./routes/index'));
-// app.use(secured());
-app.use('/', require('./routes/users'));
 app.use('/users', require('./routes/user'));
 app.use('/about', require('./routes/about'));
 app.use('/contact', require('./routes/contact'));

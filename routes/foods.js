@@ -11,7 +11,7 @@ function filterFoods(description) {
 /* GET foods page. */
 router.get('/', (req, res) => {
   console.log("User: " + JSON.stringify(req.app.locals.USER));
-  new FoodDataService( req.app.locals.DATA_URL).get_food_list().then(result => {
+  new FoodDataService().get_food_list().then(result => {
     res.render('foods', {title: 'PHE Logs', food: result.data, edit_url: req.originalUrl + '/remove'});
   });
 });
