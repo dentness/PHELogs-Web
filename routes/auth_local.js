@@ -16,7 +16,7 @@ exports.strategy = new LocalStrategy(
         return done(null, false, {message: 'Incorrect username or password.'});
       } else {
         console.log('wahoo!');
-        return done(null, user);
+        return done(null, user.data);
       }
     }, err => {
       console.log('aw snap...');
@@ -25,14 +25,33 @@ exports.strategy = new LocalStrategy(
   });
 
 router.get('/login', (req, res) => {
+  console.log('show login...');
   res.render('login', {title: 'PHE Logs'});
 });
 
-router.post('/login',
-  passport.authenticate(auth_name, { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log('passed...');
-    res.redirect('/');
+// router.post('/login',
+//   passport.authenticate('local', function(req, res, next) {
+//     console.log('passed...');
+//     res.redirect('/');
+//   })(req, res, next));
+router.post("/login",
+  function(req,res,next){
+    console.log(req.body);
+    passport.authenticate(auth_name, { successRedirect: '/' , failureRedirect: '/login' },function(err, user, info) {
+      // handle succes or failure
+      console.log('authentication...');
+      if (err) {
+        console.log(err);
+        return next(err);
+      // }
+      // if (!user) {
+      //   console.log('No user found...');
+      //   res.redirect('/login');
+      } else {
+        console.log('success! - User: ' + JSON.stringify(user));
+        res.redirect('/');
+      }
+    })(req,res,next);
   });
 
 router.get('/logout',
@@ -42,7 +61,7 @@ router.get('/logout',
     res.redirect('/');
   });
 
-exports.router = router;
+exports.routes = router;
 
 
 

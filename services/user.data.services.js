@@ -3,8 +3,8 @@ const axios = require('axios');
 class UserDataService {
 
   login(username, password) {
-    console.log('calling login API');
-    return axios.get(process.env.DATA_URL + '/users/' + username + '/' + password);
+    console.log('calling login API with ' + username + ' ' + password);
+    return axios.get(process.env.DATA_URL + '/users/login/' + username + '/' + password);
   }
 
   register(user) {
