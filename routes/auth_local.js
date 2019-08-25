@@ -8,14 +8,11 @@ const auth_name = exports.name = 'local';
 
 exports.strategy = new LocalStrategy(
   function (username, password, done) {
-    console.log('searching for user: ' + username);
   // Lookup a user
-    new UserDataService().login(username, password).then(user => {
-      if (!user) {
-        console.log('no user...');
-        return done(null, false, {message: 'Incorrect username or password.'});
+    UserDataService.login(username, password).then(user => {
+      if (!user.data) {
+        return done(new Error('Incorrect username or password.'), false, {message: 'Incorrect username or password.'});
       } else {
-        console.log('wahoo!');
         return done(null, user.data);
       }
     }, err => {
@@ -24,39 +21,40 @@ exports.strategy = new LocalStrategy(
     });
   });
 
+exports.findById = (id, done)  => {
+  UserDataService.findById(id).then(user => {
+    if (!user) {
+      console.log('Cannot find user with ID: ' + id);
+      return done(null, false, 'Cannot find user' );
+    } else {
+      return done(null, user.data);
+    }
+  });
+};
+
 router.get('/login', (req, res) => {
-  console.log('show login...');
   res.render('login', {title: 'PHE Logs'});
 });
 
-// router.post('/login',
-//   passport.authenticate('local', function(req, res, next) {
-//     console.log('passed...');
-//     res.redirect('/');
-//   })(req, res, next));
+
 router.post("/login",
   function(req,res,next){
-    console.log(req.body);
     passport.authenticate(auth_name, { successRedirect: '/' , failureRedirect: '/login' },function(err, user, info) {
-      // handle succes or failure
-      console.log('authentication...');
+      // handle success or failure
       if (err) {
         console.log(err);
         return next(err);
-      // }
-      // if (!user) {
-      //   console.log('No user found...');
-      //   res.redirect('/login');
       } else {
-        console.log('success! - User: ' + JSON.stringify(user));
-        res.redirect('/');
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          res.redirect('/');
+        });
       }
     })(req,res,next);
   });
 
 router.get('/logout',
   function(req, res){
-    console.log('logging out...');
     req.logout();
     res.redirect('/');
   });

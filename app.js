@@ -54,16 +54,21 @@ app.set('view engine', 'hbs');
 
 app.use(require('connect-flash')());
 app.use(require('morgan')('combined'));
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized:false }));
-app.use(require('cookie-parser')());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat' }));
 
 passport.use(auth.name, auth.strategy);
-
-process.nextTick(() => {
-  app.use(passport.initialize());
-  app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+passport.deserializeUser(function(id, done) {
+    auth.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 // Setup routes

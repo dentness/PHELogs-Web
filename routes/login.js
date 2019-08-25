@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET about page. */
 router.get('/', (req, res) => {
-  res.render('login', {title: 'PHE Logs'});
+  res.render('login', {title: 'PHE Logs', user: req.user});
 });
 
 router.post('/',
