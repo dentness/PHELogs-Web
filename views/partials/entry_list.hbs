@@ -3,12 +3,10 @@
         <thead class="thead-dark">
         <tr>
             <th scope="col">Food</th>
-            <th scope="col">Grams</th>
+            <th scope="col">Weights (g)</th>
             <th scope="col">mgPHE/g</th>
-            <th scope="col">Date</th>
-            {{#if editable}}
-                <th scope="col"></th>
-            {{/if}}
+            <th scope="col">PHE</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -17,11 +15,11 @@
                 <td>{{ food.description }}</td>
                 <td>{{ weight }}</td>
                 <td>{{ food.phe_multiplier }}</td>
-                <td>{{ date }}</td>
+                <td>{{ phe }}</td>
                 <td>
                 {{#if editable}}
-                    <a href="{{ edit_url }}/{{ id }}">Edit</a>
-                    <a href="{{ remove_url }}/{{ id }}">Remove</a>
+                    <a href="{{ edit_url }}/{{ id }}">x</a>
+                    <a href="{{ remove_url }}/{{ id }}">y</a>
                 {{/if}}
                 </td>
             </tr>

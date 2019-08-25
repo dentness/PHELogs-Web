@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     if (!record) {
       // Create new current diet record for user
     }
-    res.render('logfood', {
+    res.render('today', {
       title: 'PHE Logs',
       user: req.user,
       record: record.data,

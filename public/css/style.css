@@ -21,6 +21,9 @@
 a.nav-link {
   color: white;
 }
+a.nav-link:hover {
+  color: #d08f3e;
+}
 html {
   font-size: 0.7rem;
 }
@@ -40,7 +43,7 @@ html {
     font-size: 0.8rem;
   }
   .title-header {
-    font-size: 2.2rem;
+    font-size: 2.0rem;
   }
 }
 @media (min-width: 992px) {
@@ -48,7 +51,7 @@ html {
     font-size: 0.9rem;
   }
   .title-header {
-    font-size: 2.6rem;
+    font-size: 2.2rem;
   }
 }
 @media (min-width: 1200px) {

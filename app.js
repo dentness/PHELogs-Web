@@ -76,7 +76,7 @@ passport.deserializeUser(function (id, done) {
 app.use('/', auth.routes);
 app.use('/', require('./routes/index'));
 app.use('/register', require('./routes/register'));
-app.use(secured());
+//app.use(secured());
 app.use('/about', require('./routes/about'));
 app.use('/contact', require('./routes/contact'));
 app.use('/foods', require('./routes/foods'));
