@@ -1,4 +1,5 @@
 const express = require('express');
+const UserDataService = require('../services/user.data.services');
 const router = express.Router();
 
 /* GET about page. */
@@ -7,15 +8,15 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log("Registering: " + req.params.first_name);
-  console.log("req.params: " + JSON.stringify(req.params));
+  console.log("Registering: " + req.body.firstName);
+  console.log("req.params: " + JSON.stringify(req.body));
   const user = {
-    "first_name": req.params.firstName,
-    "last_name": req.params.lastName,
-    "email": req.params.email,
-    "password": req.params.password
+    "first_name": req.body.firstName,
+    "last_name": req.body.lastName,
+    "email": req.body.email,
+    "password": req.body.password
   };
-  new UserDataService( ).register(user).then(result => {
+   UserDataService.register(user).then(result => {
     if (!result) {
       // Failed to login
       console.log("failed to register");

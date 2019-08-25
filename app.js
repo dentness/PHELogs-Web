@@ -57,7 +57,7 @@ app.use(require('morgan')('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat' }));
+app.use(require('express-session')({ secret: 'keyboard cat' }, resave=true, saveUninitialized=false));
 
 passport.use(auth.name, auth.strategy);
 app.use(passport.initialize());
@@ -82,6 +82,7 @@ app.use('/records', require('./routes/records'));
 app.use('/logfood', require('./routes/logfood'));
 app.use('/register', require('./routes/register'));
 app.use('/account', require('./routes/account'));
+app.use('/register', require('./routes/register'));
 
 
 // Catch 404 and forward to error handler
