@@ -1,16 +1,12 @@
-
-
 <div>
     <h1>{{title}} - Foods List</h1>
     <div>
-        <h2>Search Food Lists:</h2>
-        <input type="text" id="searchby"/>
-        <button onclick="filterfoods()"><i class="fas fa-search"></i></button>
+        <form id="food-list" method="post">
+            <label for="food-list">Search Food Lists:</label>
+            <input type="text" id="foodName" name="foodName"/>
+            <button onclick="document.getElementById('food-list').submit();return false;"><i class="fas fa-search"></i></button>
+        </form>
     </div>
 
     {{> foods_list food=food }}
-
-    {{> edit_food }}
-
-
 </div>

@@ -26,12 +26,13 @@ class RecordDataService {
     };
   }
 
-  static create_diet_record(user, date) {
-
+  static create_diet_record(user_id) {
+    const record = { date: Date(), owner: user_id, target_phe_level: 0.0, actual_phe_level: 0.0, diet_record_details: []  };
+    return axios.post( process.env.DATA_URL + '/records', record);
   }
 
   static update_diet_record( record ) {
-
+    return axios.put(process.env.DATA_URL + '/records', record);
   }
 }
 
