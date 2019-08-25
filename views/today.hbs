@@ -1,0 +1,7 @@
+<div>
+    <div>
+        <span class="title-">Diet record for {{ record.date }}:</span>
+    </div>
+    {{> entry_list entries=record.diet_record_details }}
+    {{> tot_board totals=tot_board }}
+</div>

@@ -18,6 +18,9 @@
 #primary6 {
   background-color: #cccccc;
 }
+a.nav-link {
+  color: white;
+}
 html {
   font-size: 0.7rem;
 }

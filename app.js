@@ -81,7 +81,7 @@ app.use('/about', require('./routes/about'));
 app.use('/contact', require('./routes/contact'));
 app.use('/foods', require('./routes/foods'));
 app.use('/records', require('./routes/records'));
-app.use('/logfood', require('./routes/logfood'));
+app.use('/today', require('./routes/today'));
 app.use('/account', require('./routes/account'));
 
 

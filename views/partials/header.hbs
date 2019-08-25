@@ -12,26 +12,26 @@
                 <div class="collapse navbar-collapse mr-auto" id="navbarText">
                     <ul class="navbar-nav ml-auto">
                         {{#if user}}
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/logfood">Log Meal/Snack</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/records">Diet Records</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/foods">Food Lists</a>
                             </li>
                             <li class="nav-item">
                                 <span>{{ user.first_name }}</span>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/logout">Sign-out</a>
                             </li>
                         {{ else }}
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/login">Login</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/register">Sign-Up</a>
                             </li>
                         {{/if}}
