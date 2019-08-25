@@ -75,14 +75,13 @@ passport.deserializeUser(function (id, done) {
 // Setup routes
 app.use('/', auth.routes);
 app.use('/', require('./routes/index'));
+app.use('/register', require('./routes/register'));
 app.use(secured());
-app.use('/users', require('./routes/user'));
 app.use('/about', require('./routes/about'));
 app.use('/contact', require('./routes/contact'));
 app.use('/foods', require('./routes/foods'));
 app.use('/records', require('./routes/records'));
 app.use('/logfood', require('./routes/logfood'));
-app.use('/register', require('./routes/register'));
 app.use('/account', require('./routes/account'));
 
 
