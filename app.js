@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const dotenv = require('dotenv');
 const passport = require('passport');
 const auth = require('./routes/auth_local');
+const secured = require('./lib/middleware/secured');
 
 // Load environment variables from .env
 dotenv.config();
@@ -74,6 +75,7 @@ passport.deserializeUser(function (id, done) {
 // Setup routes
 app.use('/', auth.routes);
 app.use('/', require('./routes/index'));
+app.use(secured());
 app.use('/users', require('./routes/user'));
 app.use('/about', require('./routes/about'));
 app.use('/contact', require('./routes/contact'));

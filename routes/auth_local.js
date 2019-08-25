@@ -36,7 +36,6 @@ router.get('/login', (req, res) => {
   res.render('login', {title: 'PHE Logs'});
 });
 
-
 router.post("/login",
   function(req,res,next){
     passport.authenticate(auth_name, { successRedirect: '/' , failureRedirect: '/login' },function(err, user, info) {
