@@ -7,7 +7,6 @@ class UserDataService {
   }
 
   static findById(id) {
-    console.log('looking for id: ' + id);
     return axios.get(process.env.DATA_URL + '/users/' + id);
   }
 

@@ -56,17 +56,17 @@ app.use(require('connect-flash')());
 app.use(require('morgan')('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat' }, resave=true, saveUninitialized=false));
+app.use(require('body-parser').urlencoded({extended: true}));
+app.use(require('express-session')({secret: 'keyboard cat'}, resave = true, saveUninitialized = false));
 
 passport.use(auth.name, auth.strategy);
 app.use(passport.initialize());
 app.use(passport.session());
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user._id);
 });
-passport.deserializeUser(function(id, done) {
-    auth.findById(id, function(err, user) {
+passport.deserializeUser(function (id, done) {
+  auth.findById(id, function (err, user) {
     done(err, user);
   });
 });
@@ -82,7 +82,6 @@ app.use('/records', require('./routes/records'));
 app.use('/logfood', require('./routes/logfood'));
 app.use('/register', require('./routes/register'));
 app.use('/account', require('./routes/account'));
-app.use('/register', require('./routes/register'));
 
 
 // Catch 404 and forward to error handler

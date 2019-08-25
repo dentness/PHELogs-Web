@@ -25,7 +25,7 @@ exports.findById = (id, done)  => {
   UserDataService.findById(id).then(user => {
     if (!user) {
       console.log('Cannot find user with ID: ' + id);
-      return done(null, false, 'Cannot find user' );
+      return done(new Error('Cannot find user'), false, 'Cannot find user' );
     } else {
       return done(null, user.data);
     }
